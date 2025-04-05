@@ -1,7 +1,6 @@
-rootProject.name = "GradleTemplate"
+rootProject.name = "SimpleEdit"
 
 listOf(
-    "stock" to "stock",
     "paper" to "paper"
 ).forEach(::includeProject)
 

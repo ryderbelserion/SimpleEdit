@@ -8,6 +8,16 @@ shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 # Paper API
 paper = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
 
+# Fusion Core API
+fusion-paper = { module = "com.ryderbelserion.fusion:fusion-paper", version.ref = "fusion" }
+fusion-core = { module = "com.ryderbelserion.fusion:fusion-core", version.ref = "fusion" }
+fusion-api = { module = "com.ryderbelserion.fusion:fusion-api", version.ref = "fusion" }
+
+# Triumph API
+triumph-cmds = { module = "dev.triumphteam:triumph-cmds-bukkit", version.ref = "cmds" }
+
+worldedit = { module = "com.sk89q.worldedit:worldedit-bukkit", version.ref = "worldedit" }
+
 [versions]
 # Paper API
 paper = "1.21.4-R0.1-SNAPSHOT"
@@ -18,3 +28,12 @@ shadow = "9.0.0-beta4"
 runPaper = "2.3.1"
 minotaur = "2.8.7"
 hangar = "0.1.2"
+
+# Fusion API
+fusion = "0.30.7"
+
+# Triumph API
+cmds = "2.2.0"
+
+# EngineHub API
+worldedit = "7.3.11"

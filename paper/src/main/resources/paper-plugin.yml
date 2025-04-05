@@ -1,5 +1,6 @@
 name: '${name}'
 main: '${group}.${name}'
+loader: '${group}.loader.SimpleLoader'
 
 version: '${version}'
 api-version: '${apiVersion}'
@@ -7,3 +8,30 @@ description: '${description}'
 website: '${website}'
 
 folia-supported: true
+
+dependencies:
+  server:
+    WorldEdit:
+      load: BEFORE
+      required: true
+      join-classpath: true
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    ItemsAdder:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    Oraxen:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    Nexo:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    HeadDatabase:
+      load: BEFORE
+      required: false
+      join-classpath: true

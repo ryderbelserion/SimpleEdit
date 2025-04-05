@@ -1,12 +1,27 @@
 plugins {
     alias(libs.plugins.runPaper)
+    alias(libs.plugins.shadow)
 
     id("paper-plugin")
 }
 
 project.group = "${rootProject.group}.paper"
 project.version = rootProject.version
-project.description = "A version of GradleTemplate for Paper based servers!"
+project.description = "A version of SimpleEdit for Paper based servers!"
+
+repositories {
+    maven("https://repo.crazycrew.us/releases/")
+
+    maven("https://maven.enginehub.org/repo/")
+}
+
+dependencies {
+    implementation(libs.triumph.cmds)
+
+    compileOnly(libs.fusion.paper)
+
+    compileOnly(libs.worldedit)
+}
 
 tasks {
     processResources {
@@ -28,5 +43,10 @@ tasks {
         defaultCharacterEncoding = Charsets.UTF_8.name()
 
         minecraftVersion(libs.versions.minecraft.get())
+    }
+
+    shadowJar {
+        archiveBaseName.set(rootProject.name)
+        archiveClassifier.set("")
     }
 }
