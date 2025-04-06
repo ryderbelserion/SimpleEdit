@@ -20,6 +20,7 @@ public class CommandSchematic extends BaseCommand {
 
     private final NamespacedKey schematic_menu_button = Keys.schematic_menu_button.getNamespacedKey();
     private final NamespacedKey exit_button = Keys.exit_button.getNamespacedKey();
+    private final NamespacedKey undo_button = Keys.undo_button.getNamespacedKey();
 
     @Command("schematic")
     @Permission(value = "simpleedit.schematic", def = Mode.OP)
@@ -41,9 +42,11 @@ public class CommandSchematic extends BaseCommand {
         final Inventory inventory = player.getInventory();
 
         final ItemBuilder exit_button = ItemBuilder.from(ItemType.BARRIER).setPersistentString(this.exit_button, "1").setDisplayName("<red>Exit Mode");
+        final ItemBuilder undo_button = ItemBuilder.from(ItemType.FEATHER).setPersistentString(this.undo_button, "1").setDisplayName("<gold>Undo Button");
         final ItemBuilder schematic_button = ItemBuilder.from(ItemType.CHEST).setPersistentString(this.schematic_menu_button, "1").setDisplayName("<yellow>Schematic Menu");
 
         inventory.setItem(0, exit_button.asItemStack());
+        inventory.setItem(2, undo_button.asItemStack());
         inventory.setItem(8, schematic_button.asItemStack());
 
         user.addState(State.editor_mode);

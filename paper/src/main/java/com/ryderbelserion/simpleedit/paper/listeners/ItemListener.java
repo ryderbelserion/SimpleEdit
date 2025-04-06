@@ -30,6 +30,7 @@ public class ItemListener implements Listener {
     private final NamespacedKey schematic_menu_button = Keys.schematic_menu_button.getNamespacedKey();
     private final NamespacedKey schematic_button = Keys.schematic_button.getNamespacedKey();
     private final NamespacedKey exit_button = Keys.exit_button.getNamespacedKey();
+    private final NamespacedKey undo_button = Keys.undo_button.getNamespacedKey();
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
@@ -70,6 +71,19 @@ public class ItemListener implements Listener {
                 @Override
                 public void run() {
                     server.dispatchCommand(player, "//paste " + schematic_name);
+                }
+            }.run();
+
+            event.setCancelled(true);
+
+            return;
+        }
+
+        if (itemData.has(this.undo_button)) {
+            new FoliaScheduler(Scheduler.global_scheduler) {
+                @Override
+                public void run() {
+                    server.dispatchCommand(player, "//undo");
                 }
             }.run();
 

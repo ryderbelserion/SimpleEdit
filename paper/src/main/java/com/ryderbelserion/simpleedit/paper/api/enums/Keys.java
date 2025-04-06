@@ -10,6 +10,7 @@ public enum Keys {
 
     schematic_menu_button("schematic_menu", PersistentDataType.STRING),
     schematic_button("schematic_button", PersistentDataType.STRING),
+    undo_button("undo_button", PersistentDataType.STRING),
     exit_button("exit_button", PersistentDataType.STRING);
 
     private final SimpleEdit plugin = SimpleEdit.getPlugin();
