@@ -24,6 +24,17 @@ dependencies {
 }
 
 tasks {
+    assemble {
+        dependsOn(shadowJar)
+
+        doLast {
+            copy {
+                from(shadowJar.get())
+                into(rootProject.projectDir.resolve("jars"))
+            }
+        }
+    }
+
     processResources {
         inputs.properties("name" to rootProject.name)
         inputs.properties("version" to project.version)
