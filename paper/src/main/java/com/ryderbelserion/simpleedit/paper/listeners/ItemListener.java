@@ -90,7 +90,8 @@ public class ItemListener implements Listener {
                     new FoliaScheduler(Scheduler.global_scheduler) {
                         @Override
                         public void run() {
-                            server.dispatchCommand(player, "//paste " + schematic_name);
+                            player.performCommand("/schematic load " + schematic_name);
+                            player.performCommand("/paste");
                         }
                     }.run();
                 }
@@ -107,7 +108,7 @@ public class ItemListener implements Listener {
             new FoliaScheduler(Scheduler.global_scheduler) {
                 @Override
                 public void run() {
-                    server.dispatchCommand(player, "//undo");
+                    player.performCommand("/undo");
                 }
             }.run();
 
