@@ -11,6 +11,7 @@ import dev.triumphteam.cmd.core.annotations.Permission;
 import dev.triumphteam.cmd.core.annotations.Syntax;
 import dev.triumphteam.cmd.core.argument.keyed.Flags;
 import dev.triumphteam.cmd.core.enums.Mode;
+import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -32,6 +33,8 @@ public class CommandSchematic extends BaseCommand {
         if (flag.hasFlag("e") && user.getStates().contains(State.editor_mode.getName())) {
             user.restoreInventory(player);
 
+            player.setGameMode(GameMode.SURVIVAL);
+
             user.removeState(State.editor_mode);
 
             return;
@@ -48,6 +51,8 @@ public class CommandSchematic extends BaseCommand {
         inventory.setItem(0, exit_button.asItemStack());
         inventory.setItem(2, undo_button.asItemStack());
         inventory.setItem(8, schematic_button.asItemStack());
+
+        player.setGameMode(GameMode.CREATIVE);
 
         user.addState(State.editor_mode);
     }

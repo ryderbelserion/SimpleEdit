@@ -9,6 +9,7 @@ import com.ryderbelserion.simpleedit.paper.api.enums.State;
 import com.ryderbelserion.simpleedit.paper.api.objects.User;
 import com.ryderbelserion.simpleedit.paper.menus.SchematicMenu;
 import io.papermc.paper.persistence.PersistentDataContainerView;
+import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -16,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
@@ -45,11 +47,24 @@ public class ItemListener implements Listener {
     }
 
     @EventHandler
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        final Player player = event.getPlayer();
+
+        final User user = this.user.getUser(player);
+
+        if (user == null || !user.getStates().contains(State.editor_mode.getName())) return;
+
+        event.setCancelled(true);
+    }
+
+    @EventHandler
     public void onInteractEvent(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         final ItemStack item = event.getItem();
 
         if (item == null || item.isEmpty()) return;
+
+        if (!player.hasPermission("simpleedit.schematic")) return;
 
         final PersistentDataContainerView itemData = item.getPersistentDataContainer();
 
@@ -103,6 +118,8 @@ public class ItemListener implements Listener {
 
         if (itemData.has(this.exit_button)) {
             user.restoreInventory(player);
+
+            player.setGameMode(GameMode.SURVIVAL);
 
             user.removeState(State.editor_mode);
 

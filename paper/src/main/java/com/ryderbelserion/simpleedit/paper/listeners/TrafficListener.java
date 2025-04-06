@@ -4,6 +4,7 @@ import com.ryderbelserion.simpleedit.paper.SimpleEdit;
 import com.ryderbelserion.simpleedit.paper.api.UserManager;
 import com.ryderbelserion.simpleedit.paper.api.enums.State;
 import com.ryderbelserion.simpleedit.paper.api.objects.User;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,11 +28,11 @@ public class TrafficListener implements Listener {
 
         final User user = this.userManager.getUser(player);
 
-        if (user == null) return;
-
-        if (!user.getStates().contains(State.editor_mode)) return;
+        if (user == null || !user.getStates().contains(State.editor_mode.getName())) return;
 
         user.restoreInventory(player);
+
+        player.setGameMode(GameMode.SURVIVAL);
 
         this.userManager.removeUser(player);
     }
