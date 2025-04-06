@@ -2,8 +2,10 @@ package com.ryderbelserion.simpleedit.paper;
 
 import com.ryderbelserion.fusion.api.files.FileManager;
 import com.ryderbelserion.fusion.paper.FusionPaper;
+import com.ryderbelserion.simpleedit.paper.api.SchematicManager;
 import com.ryderbelserion.simpleedit.paper.api.UserManager;
 import com.ryderbelserion.simpleedit.paper.commands.features.CommandHandler;
+import com.ryderbelserion.simpleedit.paper.listeners.ItemListener;
 import com.ryderbelserion.simpleedit.paper.listeners.TrafficListener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,6 +16,7 @@ public class SimpleEdit extends JavaPlugin {
         return JavaPlugin.getPlugin(SimpleEdit.class);
     }
 
+    private SchematicManager schematicManager;
     private FileManager fileManager;
     private UserManager userManager;
     private FusionPaper api;
@@ -23,6 +26,8 @@ public class SimpleEdit extends JavaPlugin {
         this.api = new FusionPaper(getComponentLogger(), getDataPath());
         this.api.enable(this);
 
+        this.schematicManager = new SchematicManager();
+
         this.fileManager = this.api.getFileManager();
 
         this.userManager = new UserManager();
@@ -30,6 +35,7 @@ public class SimpleEdit extends JavaPlugin {
         final PluginManager pluginManager = getServer().getPluginManager();
 
         pluginManager.registerEvents(new TrafficListener(), this);
+        pluginManager.registerEvents(new ItemListener(), this);
 
         new CommandHandler();
     }
@@ -39,6 +45,10 @@ public class SimpleEdit extends JavaPlugin {
         if (this.api != null) {
             this.api.save();
         }
+    }
+
+    public final SchematicManager getSchematicManager() {
+        return this.schematicManager;
     }
 
     public final FileManager getFileManager() {

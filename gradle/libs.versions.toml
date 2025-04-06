@@ -30,7 +30,7 @@ minotaur = "2.8.7"
 hangar = "0.1.2"
 
 # Fusion API
-fusion = "0.30.7"
+fusion = "0.30.8"
 
 # Triumph API
 cmds = "2.2.0"
