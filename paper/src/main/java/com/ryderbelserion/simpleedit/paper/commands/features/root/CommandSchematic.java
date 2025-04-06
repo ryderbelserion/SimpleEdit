@@ -50,6 +50,7 @@ public class CommandSchematic extends BaseCommand {
 
         inventory.setItem(0, exit_button.asItemStack());
         inventory.setItem(2, undo_button.asItemStack());
+        inventory.setItem(6, ItemBuilder.from(ItemType.WOODEN_AXE).asItemStack());
         inventory.setItem(8, schematic_button.asItemStack());
 
         player.setGameMode(GameMode.CREATIVE);
