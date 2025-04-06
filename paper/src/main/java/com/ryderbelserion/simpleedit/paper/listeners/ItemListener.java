@@ -14,6 +14,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -65,14 +66,22 @@ public class ItemListener implements Listener {
         }
 
         if (itemData.has(this.schematic_button)) {
-            final String schematic_name = itemData.get(this.schematic_button, PersistentDataType.STRING);
+            final Action action = event.getAction();
 
-            new FoliaScheduler(Scheduler.global_scheduler) {
-                @Override
-                public void run() {
-                    server.dispatchCommand(player, "//paste " + schematic_name);
+            switch (action) {
+                case RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK -> {
+                    final String schematic_name = itemData.get(this.schematic_button, PersistentDataType.STRING);
+
+                    new FoliaScheduler(Scheduler.global_scheduler) {
+                        @Override
+                        public void run() {
+                            server.dispatchCommand(player, "//paste " + schematic_name);
+                        }
+                    }.run();
                 }
-            }.run();
+
+                default -> new SchematicMenu(player).build();
+            }
 
             event.setCancelled(true);
 
