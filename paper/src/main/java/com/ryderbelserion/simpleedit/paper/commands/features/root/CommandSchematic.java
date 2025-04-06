@@ -28,7 +28,7 @@ public class CommandSchematic extends BaseCommand {
     public void schematic(final Player player, final Flags flag) {
         final User user = this.userManager.getUser(player);
 
-        if (flag.hasFlag("e") && user.getStates().contains(State.editor_mode)) {
+        if (flag.hasFlag("e") && user.getStates().contains(State.editor_mode.getName())) {
             user.restoreInventory(player);
 
             user.removeState(State.editor_mode);

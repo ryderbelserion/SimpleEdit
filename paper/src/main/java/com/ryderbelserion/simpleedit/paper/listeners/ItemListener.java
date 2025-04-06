@@ -1,7 +1,8 @@
 package com.ryderbelserion.simpleedit.paper.listeners;
 
+import com.ryderbelserion.fusion.paper.api.enums.Scheduler;
+import com.ryderbelserion.fusion.paper.api.scheduler.FoliaScheduler;
 import com.ryderbelserion.simpleedit.paper.SimpleEdit;
-import com.ryderbelserion.simpleedit.paper.api.SchematicManager;
 import com.ryderbelserion.simpleedit.paper.api.UserManager;
 import com.ryderbelserion.simpleedit.paper.api.enums.Keys;
 import com.ryderbelserion.simpleedit.paper.api.enums.State;
@@ -18,15 +19,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.nio.file.Path;
-
 public class ItemListener implements Listener {
 
     private final SimpleEdit plugin = SimpleEdit.getPlugin();
 
     private final Server server = this.plugin.getServer();
-
-    private final SchematicManager schematicManager = this.plugin.getSchematicManager();
 
     private final UserManager user = this.plugin.getUserManager();
 
@@ -40,7 +37,7 @@ public class ItemListener implements Listener {
 
         final User user = this.user.getUser(player);
 
-        if (user == null || !user.getStates().contains(State.editor_mode)) return;
+        if (user == null || !user.getStates().contains(State.editor_mode.getName())) return;
 
         event.setCancelled(true);
     }
@@ -56,7 +53,7 @@ public class ItemListener implements Listener {
 
         final User user = this.user.getUser(player);
 
-        if (!user.getStates().contains(State.editor_mode)) return;
+        if (!user.getStates().contains(State.editor_mode.getName())) return;
 
         if (itemData.has(this.schematic_menu_button)) {
             new SchematicMenu(player).build();
@@ -67,9 +64,14 @@ public class ItemListener implements Listener {
         }
 
         if (itemData.has(this.schematic_button)) {
-            final String schematic_name = itemData.get(this.schematic_menu_button, PersistentDataType.STRING);
+            final String schematic_name = itemData.get(this.schematic_button, PersistentDataType.STRING);
 
-            this.server.dispatchCommand(player, "//paste " + schematic_name);
+            new FoliaScheduler(Scheduler.global_scheduler) {
+                @Override
+                public void run() {
+                    server.dispatchCommand(player, "//paste " + schematic_name);
+                }
+            }.run();
 
             event.setCancelled(true);
 

@@ -9,7 +9,7 @@ public enum Plugins {
     cloud_annotations("org.incendo", "cloud-annotations", "2.0.0"),
     cloud_paper("org.incendo", "cloud-paper", "2.0.0-beta.10"),
 
-    fusion("com.ryderbelserion.fusion", "fusion-paper", "0.30.7"),
+    fusion("com.ryderbelserion.fusion", "fusion-paper", "0.30.8"),
 
     configme("ch.jalu", "configme", "1.4.3");
 

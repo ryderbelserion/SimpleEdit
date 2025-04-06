@@ -10,7 +10,7 @@ import java.util.List;
 
 public class User {
 
-    private final List<State> states = new ArrayList<>();
+    private final List<String> states = new ArrayList<>();
 
     private ItemStack[] armorContents;
     private ItemStack[] contents;
@@ -42,14 +42,14 @@ public class User {
     }
 
     public void addState(@NotNull final State state) {
-        this.states.add(state);
+        this.states.add(state.getName());
     }
 
     public void removeState(@NotNull final State state) {
-        this.states.remove(state);
+        this.states.remove(state.getName());
     }
 
-    public final List<State> getStates() {
+    public final List<String> getStates() {
         return this.states;
     }
 }
