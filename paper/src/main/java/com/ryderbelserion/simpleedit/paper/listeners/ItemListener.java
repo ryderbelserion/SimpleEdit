@@ -3,6 +3,7 @@ package com.ryderbelserion.simpleedit.paper.listeners;
 import com.ryderbelserion.fusion.paper.api.enums.Scheduler;
 import com.ryderbelserion.fusion.paper.api.scheduler.FoliaScheduler;
 import com.ryderbelserion.simpleedit.paper.SimpleEdit;
+import com.ryderbelserion.simpleedit.paper.api.SchematicManager;
 import com.ryderbelserion.simpleedit.paper.api.UserManager;
 import com.ryderbelserion.simpleedit.paper.api.enums.Keys;
 import com.ryderbelserion.simpleedit.paper.api.enums.State;
@@ -25,6 +26,8 @@ import org.bukkit.persistence.PersistentDataType;
 public class ItemListener implements Listener {
 
     private final SimpleEdit plugin = SimpleEdit.getPlugin();
+
+    private final SchematicManager schematicManager = this.plugin.getSchematicManager();
 
     private final Server server = this.plugin.getServer();
 
@@ -87,13 +90,7 @@ public class ItemListener implements Listener {
                 case RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK -> {
                     final String schematic_name = itemData.get(this.schematic_button, PersistentDataType.STRING);
 
-                    new FoliaScheduler(Scheduler.global_scheduler) {
-                        @Override
-                        public void run() {
-                            player.performCommand("/schematic load " + schematic_name);
-                            player.performCommand("/paste");
-                        }
-                    }.run();
+                    this.schematicManager.pasteSchematic(player, player.getLocation(), schematic_name);
                 }
 
                 default -> new SchematicMenu(player).build();
